@@ -1,0 +1,6 @@
+
+description = 'msa-rpc-client'
+dependencies {
+    compile project(':msa-rpc-common')
+    testCompile group: 'junit', name: 'junit', version:'4.12'
+}
