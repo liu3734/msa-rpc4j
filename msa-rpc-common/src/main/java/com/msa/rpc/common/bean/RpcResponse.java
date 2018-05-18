@@ -36,6 +36,6 @@ public class RpcResponse {
      * 是否带有异常
      */
     public boolean hasException() {
-        return Objects.isNull(exception);
+        return Objects.nonNull(exception);
     }
 }
