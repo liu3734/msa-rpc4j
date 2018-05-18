@@ -99,14 +99,15 @@ public class RpcClient {
          */
         @Override
         public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+            String serviceName = interfaceClazz.getName();
+            String interfaceName = serviceName;
             RpcRequest request = RpcRequest.builder()
                     .requestId(UUID.randomUUID().toString())
-                    .interfaceName(method.getDeclaringClass().getName())
+                    .interfaceName(interfaceName)
                     .methodName(method.getName())
                     .parameterType(method.getParameterTypes())
                     .parameters(args)
                     .build();
-            String serviceName = interfaceClazz.getName();
             String hostAndPort = serviceDiscovery.discover(serviceName);
             log.debug(">>>>>>>>===discover service: {} ===> {}", serviceName, hostAndPort);
             if (StringUtils.isEmpty(hostAndPort)) {
