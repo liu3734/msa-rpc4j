@@ -93,9 +93,9 @@ public class RpcServer implements ApplicationContextAware, InitializingBean {
                 protected void initChannel(SocketChannel channel) throws Exception {
                     ChannelPipeline pipeline = channel.pipeline();
                     // 解码RPC请求
-                    pipeline.addLast(new RpcEncoder(RpcRequest.class));
+                    pipeline.addLast(new RpcDecoder(RpcRequest.class));
                     // 编码RPC响应
-                    pipeline.addLast(new RpcDecoder(RpcResponse.class));
+                    pipeline.addLast(new RpcEncoder(RpcResponse.class));
                     // 处理RPC请求
                     pipeline.addLast(new RpcServerReqHandler(handlerMap));
                 }
