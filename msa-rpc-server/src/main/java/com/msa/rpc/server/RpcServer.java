@@ -22,6 +22,7 @@ import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.util.ClassUtils;
 import org.springframework.util.CollectionUtils;
 
 import java.net.InetAddress;
@@ -46,7 +47,7 @@ public class RpcServer implements ApplicationContextAware, InitializingBean {
     /**
      * 存放服务名称与服务实例映射关系
      */
-    private Map<String, Object> handlerMap = Maps.newHashMap();
+    private final Map<String, Object> handlerMap = Maps.newHashMap();
 
     /**
      * The Registry.
@@ -70,6 +71,14 @@ public class RpcServer implements ApplicationContextAware, InitializingBean {
         serviceBeanMap.forEach((beanName, serviceBean) -> {
             RpcService rpcService = serviceBean.getClass().getAnnotation(RpcService.class);
             String serviceName = rpcService.value().getName();
+            try {
+                Class clazz = ClassUtils.getDefaultClassLoader().loadClass(serviceName);
+                if (!clazz.isInterface()) {
+                    throw new IllegalArgumentException(serviceName + " must be a interface");
+                }
+            } catch (ClassNotFoundException e) {
+                throw new IllegalArgumentException(serviceName + " in classpath not find");
+            }
             handlerMap.put(serviceName, serviceBean);
         });
     }
