@@ -54,8 +54,8 @@ public class RpcClient {
      * @param interfaceClazz the interface clazz
      * @return the t
      */
-    public <T> T newInstance(final Class<T> interfaceClazz) {
-        return Reflection.newProxy(interfaceClazz, new RpcInvocationHandler(serviceDiscovery, interfaceClazz));
+    public <T> T newInstance(final Class<T> type, final Class interfaceClazz) {
+        return Reflection.newProxy(type, new RpcInvocationHandler(serviceDiscovery, interfaceClazz));
     }
 
     /**
