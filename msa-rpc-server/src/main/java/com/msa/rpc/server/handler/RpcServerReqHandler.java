@@ -14,12 +14,6 @@ import java.util.Objects;
 
 /**
  * The type Rpc server req handler.
- *
- * @ClassName: RpcServerReqHandler
- * @Description: 服务端处理请求类
- * @Author: sxp
- * @Date: 14 :42 2018/4/28
- * @Version: 1.0.0
  */
 @Slf4j
 public class RpcServerReqHandler extends SimpleChannelInboundHandler<RpcRequest> {
@@ -30,7 +24,7 @@ public class RpcServerReqHandler extends SimpleChannelInboundHandler<RpcRequest>
     private final Map<String, Object> handlerMap;
 
     /**
-     * see {@link #SimpleChannelInboundHandler(boolean)} with {@code true} as boolean parameter.
+     * Instantiates a new Rpc server req handler.
      *
      * @param handlerMap the handler map
      */
@@ -39,15 +33,11 @@ public class RpcServerReqHandler extends SimpleChannelInboundHandler<RpcRequest>
     }
 
     /**
-     * 读取通道中的数据
-     * <strong>Please keep in mind that this method will be renamed to
-     * {@code messageReceived(ChannelHandlerContext, I)} in 5.0.</strong>
-     * <p>
-     * Is called for each message of type {@link I}.
+     * Channel read 0.
      *
-     * @param ctx     the {@link ChannelHandlerContext} which this {@link SimpleChannelInboundHandler}            belongs to
+     * @param ctx     the ctx
      * @param request the request
-     * @throws Exception is thrown if an error occurred
+     * @throws Exception the exception
      */
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, RpcRequest request) throws Exception {
@@ -60,7 +50,6 @@ public class RpcServerReqHandler extends SimpleChannelInboundHandler<RpcRequest>
             response.setException(e);
             log.error(">>>>>>>>===handle rpc request failure", e);
         }
-        // 写入RPC应答结果，立即关闭和客户端的连接，防止连接数达到上限，线程堵塞
         ctx.writeAndFlush(response).addListener(ChannelFutureListener.CLOSE);
     }
 
@@ -89,11 +78,7 @@ public class RpcServerReqHandler extends SimpleChannelInboundHandler<RpcRequest>
     }
 
     /**
-     * 用于捕获RPC通信中的异常
-     * Calls {@link ChannelHandlerContext#fireExceptionCaught(Throwable)} to forward
-     * to the next {@link ChannelHandler} in the {@link ChannelPipeline}.
-     * <p>
-     * Sub-classes may override this method to change behavior.
+     * Exception caught.
      *
      * @param ctx   the ctx
      * @param cause the cause

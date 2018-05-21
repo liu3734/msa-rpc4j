@@ -30,11 +30,6 @@ import java.util.Map;
 
 /**
  * The type Rpc server.
- *
- * @class:RpcServer
- * @description:服务扫描、注册、启动和等待客户端请求处理
- * @author:sxp
- * @date:2018/4/15 9 :26
  */
 @Slf4j
 @Data
@@ -45,7 +40,7 @@ public class RpcServer implements ApplicationContextAware, InitializingBean {
     private int port;
 
     /**
-     * 存放服务名称与服务实例映射关系
+     * The Handler map.
      */
     private final Map<String, Object> handlerMap = Maps.newHashMap();
 
@@ -84,7 +79,6 @@ public class RpcServer implements ApplicationContextAware, InitializingBean {
     }
 
     /**
-     * 服务注册和服务启动
      * After properties set.
      *
      * @throws Exception the exception

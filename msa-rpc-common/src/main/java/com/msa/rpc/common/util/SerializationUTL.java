@@ -14,11 +14,6 @@ import java.util.Objects;
 
 /**
  * The type Serialization utl.
- *
- * @class:SerializationUTL
- * @description:Protostuff序列化工具
- * @author:sxp
- * @date:2018/4/15 10 :53
  */
 @Slf4j
 public class SerializationUTL {
@@ -34,7 +29,6 @@ public class SerializationUTL {
     private static final Objenesis objenesis = new ObjenesisStd(true);
 
     /**
-     * 序列化
      * Serialize byte [ ].
      *
      * @param <T> the type parameter

@@ -7,10 +7,7 @@ import lombok.ToString;
 import java.util.Objects;
 
 /**
- * @class:RpcResponse
- * @description:RPC响应bean
- * @author:sxp
- * @date:2018/4/15 10:29
+ * The type Rpc response.
  */
 @Data
 @Builder
@@ -18,22 +15,24 @@ import java.util.Objects;
 public class RpcResponse {
 
     /**
-     * 请求编号，标识唯一请求
+     * The Request id.
      */
     private String requestId;
 
     /**
-     * 异常信息
+     * The Exception.
      */
     Exception exception;
 
     /**
-     * 响应结果
+     * The Result.
      */
     private Object result;
 
     /**
-     * 是否带有异常
+     * Has exception boolean.
+     *
+     * @return the boolean
      */
     public boolean hasException() {
         return Objects.nonNull(exception);

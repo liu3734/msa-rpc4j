@@ -8,17 +8,15 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * @class:RpcService
- * @description:rpc服务注解类
- * @author:sxp
- * @date:2018/4/15 9:14
+ * The interface Rpc service.
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 @Service
 public @interface RpcService {
     /**
-     * 服务接口类
+     *
+     * @return the class
      */
     Class<?> value();
 }

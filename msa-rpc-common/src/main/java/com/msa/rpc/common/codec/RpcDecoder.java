@@ -9,10 +9,7 @@ import lombok.AllArgsConstructor;
 import java.util.List;
 
 /**
- * @class:RpcDecoder
- * @description:Rpc解码器
- * @author:sxp
- * @date:2018/4/15 11:22
+ * The type Rpc decoder.
  */
 @AllArgsConstructor
 public class RpcDecoder extends ByteToMessageDecoder {
@@ -21,6 +18,14 @@ public class RpcDecoder extends ByteToMessageDecoder {
      */
     private Class<?> genericClass;
 
+    /**
+     * Decode.
+     *
+     * @param channelHandlerContext the channel handler context
+     * @param in                    the in
+     * @param out                   the out
+     * @throws Exception the exception
+     */
     @Override
     protected void decode(ChannelHandlerContext channelHandlerContext, ByteBuf in, List<Object> out) throws Exception {
         if (in.readableBytes() < 4) {

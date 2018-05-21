@@ -8,11 +8,6 @@ import lombok.AllArgsConstructor;
 
 /**
  * The type Rpc encoder.
- *
- * @class:RpcEncoder
- * @description:RPC编码器
- * @author:sxp
- * @date:2018/4/15 10 :48
  */
 @AllArgsConstructor
 public class RpcEncoder extends MessageToByteEncoder{
