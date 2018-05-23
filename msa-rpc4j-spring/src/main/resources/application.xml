@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:msa-rpc4j="http://www.microcmpt.com/schema/msa-rpc4j"
+       xsi:schemaLocation="
+            http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+            http://www.microcmpt.com/schema/msa-rpc4j http://www.microcmpt.com/schema/msa-rpc4j.xsd">
+
+    <!-- rpc4j端口 -->
+    <msa-rpc4j:server port="8088" registry=""/>
+    <!-- 服务注册中心 -->
+    <msa-rpc4j:registry registryAddress="localhost:2181"/>
+
+</beans>

@@ -2,6 +2,7 @@ rootProject.name = 'msa-rpc4j'
 include ':msa-rpc-common'
 include ':msa-rpc-server'
 include ':msa-rpc-client'
+include 'msa-rpc4j-spring'
 
 project(':msa-rpc-common').projectDir = "$rootDir/msa-rpc-common" as File
 project(':msa-rpc-server').projectDir = "$rootDir/msa-rpc-server" as File
