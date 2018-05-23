@@ -6,9 +6,9 @@
             http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
             http://www.microcmpt.com/schema/msa-rpc4j http://www.microcmpt.com/schema/msa-rpc4j.xsd">
 
-    <!-- rpc4j端口 -->
-    <msa-rpc4j:server port="8088" registry=""/>
     <!-- 服务注册中心 -->
-    <msa-rpc4j:registry registryAddress="localhost:2181"/>
+    <msa-rpc4j:registry id="zkRegistry" registryAddress="localhost:2181"/>
+    <!-- rpc4j -->
+    <msa-rpc4j:server id="rpcServer" port="8088" registry="zkRegistry"/>
 
 </beans>

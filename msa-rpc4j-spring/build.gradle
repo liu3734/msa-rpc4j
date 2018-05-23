@@ -6,4 +6,5 @@ dependencies {
     compile (group: 'com.github.microcmpt', name: 'msa-rpc-client', version:'1.0-SNAPSHOT') {
         exclude(module: 'spring-boot-starter-jersey')
     }
+    testCompile group: 'junit', name: 'junit', version:'4.12'
 }

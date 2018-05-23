@@ -1,32 +1,59 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-            xmlns="http://www.microcmpt.com/schema/msa-rpc4j" targetNamespace="http://www.microcmpt.com/schema/msa-rpc4j"
+            xmlns:tool="http://www.springframework.org/schema/tool"
+            xmlns="http://www.microcmpt.com/schema/msa-rpc4j"
+            targetNamespace="http://www.microcmpt.com/schema/msa-rpc4j"
             elementFormDefault="qualified">
+
+    <xsd:import namespace="http://www.springframework.org/schema/tool"/>
+
     <xsd:element name="server">
         <xsd:complexType>
-            <xsd:attribute name="port" type="xsd:string" />
+            <xsd:attribute name="id" type="xsd:ID" use="required"/>
+            <xsd:attribute name="port" type="xsd:string"/>
             <xsd:attribute name="registry" type="xsd:string" use="required"/>
         </xsd:complexType>
     </xsd:element>
 
     <xsd:element name="service">
         <xsd:complexType>
-            <xsd:attribute name="id" type="xsd:string" />
-            <xsd:attribute name="interface" type="xsd:string" use="required"/>
+            <xsd:attribute name="id" type="xsd:ID"/>
+            <xsd:attribute name="interface" type="xsd:token" use="required">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        <![CDATA[ Defines the interface to advertise for this service in the service registry. ]]></xsd:documentation>
+                    <xsd:appinfo>
+                        <tool:annotation>
+                            <tool:expected-type type="java.lang.Class"/>
+                        </tool:annotation>
+                    </xsd:appinfo>
+                </xsd:annotation>
+            </xsd:attribute>
             <xsd:attribute name="ref" type="xsd:string" use="required"/>
         </xsd:complexType>
     </xsd:element>
 
     <xsd:element name="registry">
         <xsd:complexType>
-            <xsd:attribute name="registryAddress" type="xsd:string" />
+            <xsd:attribute name="id" type="xsd:ID" use="required"/>
+            <xsd:attribute name="registryAddress" type="xsd:string"/>
         </xsd:complexType>
     </xsd:element>
 
     <xsd:element name="reference">
         <xsd:complexType>
-            <xsd:attribute name="id" type="xsd:string" />
-            <xsd:attribute name="interface" type="xsd:string" use="required"/>
+            <xsd:attribute name="id" type="xsd:ID"/>
+            <xsd:attribute name="interface" type="xsd:token" use="required">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        <![CDATA[ Defines the interface to advertise for this service in the service registry. ]]></xsd:documentation>
+                    <xsd:appinfo>
+                        <tool:annotation>
+                            <tool:expected-type type="java.lang.Class"/>
+                        </tool:annotation>
+                    </xsd:appinfo>
+                </xsd:annotation>
+            </xsd:attribute>
         </xsd:complexType>
     </xsd:element>
 </xsd:schema>

@@ -34,6 +34,6 @@ public class Rpc4jRegistryBeanDefinitionParser extends AbstractSingleBeanDefinit
      */
     @Override
     protected void doParse(Element element, BeanDefinitionBuilder builder) {
-
+        builder.addPropertyValue("zkAddress", element.getAttribute("registryAddress"));
     }
 }
