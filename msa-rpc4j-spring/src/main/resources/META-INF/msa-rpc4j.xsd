@@ -9,7 +9,7 @@
 
     <xsd:element name="server">
         <xsd:complexType>
-            <xsd:attribute name="id" type="xsd:ID" use="required"/>
+            <xsd:attribute name="id" type="xsd:ID"/>
             <xsd:attribute name="port" type="xsd:string"/>
             <xsd:attribute name="registry" type="xsd:string" use="required"/>
         </xsd:complexType>
@@ -35,7 +35,7 @@
 
     <xsd:element name="registry">
         <xsd:complexType>
-            <xsd:attribute name="id" type="xsd:ID" use="required"/>
+            <xsd:attribute name="id" type="xsd:ID"/>
             <xsd:attribute name="registryAddress" type="xsd:string"/>
         </xsd:complexType>
     </xsd:element>

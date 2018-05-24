@@ -2,6 +2,7 @@ package com.msa.rpc.spring;
 
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.xml.AbstractSingleBeanDefinitionParser;
+import org.springframework.beans.factory.xml.ParserContext;
 import org.w3c.dom.Element;
 
 public class Rpc4jServiceBeanDefinitionParser extends AbstractSingleBeanDefinitionParser {
@@ -26,13 +27,18 @@ public class Rpc4jServiceBeanDefinitionParser extends AbstractSingleBeanDefiniti
     /**
      * Parse the supplied {@link Element} and populate the supplied
      * {@link BeanDefinitionBuilder} as required.
-     * <p>The default implementation does nothing.
+     * <p>The default implementation delegates to the {@code doParse}
+     * version without ParserContext argument.
      *
-     * @param element the XML element being parsed
-     * @param builder used to define the {@code BeanDefinition}
+     * @param element       the XML element being parsed
+     * @param parserContext the object encapsulating the current state of the parsing process
+     * @param builder       used to define the {@code BeanDefinition}
+     * @see #doParse(Element, BeanDefinitionBuilder)
      */
     @Override
-    protected void doParse(Element element, BeanDefinitionBuilder builder) {
+    protected void doParse(Element element, ParserContext parserContext, BeanDefinitionBuilder builder) {
+        String clazz = element.getAttribute("interface");
+
 
     }
 }

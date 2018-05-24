@@ -53,7 +53,11 @@ public class Rpc4jServerBeanDefinitionParser extends AbstractSingleBeanDefinitio
         }
         RuntimeBeanReference reference = new RuntimeBeanReference(registry);
         builder.addPropertyValue("registry", reference);
-        parserContext.getRegistry().registerBeanDefinition(element.getAttribute("id"), builder.getBeanDefinition());
+        String id = element.getAttribute("id");
+        if (StringUtils.isEmpty(id)) {
+            id = RpcServer.class.getCanonicalName();
+        }
+        parserContext.getRegistry().registerBeanDefinition(id, builder.getBeanDefinition());
     }
 
 }
