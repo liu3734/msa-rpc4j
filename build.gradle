@@ -82,6 +82,10 @@ subprojects {
         from 'build/docs/javadoc'
     }
 
+    task wrapper(type: Wrapper) {
+        gradleVersion = '3.5.1'
+    }
+
     tasks.withType(JavaCompile) {
         options.encoding = "UTF-8"
     }
