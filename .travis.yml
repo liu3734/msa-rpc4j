@@ -2,4 +2,4 @@ language: java
 jdk:
     - oraclejdk8
     - openjdk7
-script: gradle wrapper build -x test
+script: gradle build -x test

@@ -8,6 +8,8 @@ target/
 
 # gradle ignore
 .gradle
+gradlew
+gradlew.bat
 build/
 
 # eclipse ignore
