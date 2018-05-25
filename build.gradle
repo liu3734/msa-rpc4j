@@ -29,48 +29,48 @@ subprojects {
         maven { url snapshotsMaven }
     }
 
-//    uploadArchives {
-//        repositories {
-//            mavenDeployer {
-//                //为Pom文件做数字签名
-//                beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
-//                repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
-//                    authentication(userName: ossrhUsername, password: ossrhPassword)
-//                }
-//                snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
-//                    authentication(userName: sonatypeUsername, password: sonatypePassword)
-//                }
-//                pom.project {
-//                    name project.name
-//                    packaging 'jar'
-//                    description 'Lightweight RPC communication framework based on netty and protostuff.'
-//                    url 'https://github.com/microcmpt/msa-api-regcovery'
-//
-//                    scm {
-//                        url 'https://github.com/microcmpt/msa-rpc4j'
-//                        connection 'git@github.com:microcmpt/msa-rpc4j.git'
-//                        developerConnection 'git@github.com:microcmpt/msa-rpc4j.git'
-//                    }
-//
-//                    licenses {
-//                        license {
-//                            name 'The Apache Software License, Version 2.0'
-//                            url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-//                            distribution 'repo'
-//                        }
-//                    }
-//
-//                    developers {
-//                        developer {
-//                            id 'xiapshen'
-//                            name 'Shen Xia ping'
-//                            email '1378127237@qq.com'
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//    }
+    uploadArchives {
+        repositories {
+            mavenDeployer {
+                //为Pom文件做数字签名
+                beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+                repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
+                    authentication(userName: System.getenv('ossrhUsername'), password: System.getenv('ossrhPassword'))
+                }
+                snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
+                    authentication(userName: System.getenv('sonatypeUsername'), password: System.getenv('sonatypePassword'))
+                }
+                pom.project {
+                    name project.name
+                    packaging 'jar'
+                    description 'Lightweight RPC communication framework based on netty and protostuff.'
+                    url 'https://github.com/microcmpt/msa-api-regcovery'
+
+                    scm {
+                        url 'https://github.com/microcmpt/msa-rpc4j'
+                        connection 'git@github.com:microcmpt/msa-rpc4j.git'
+                        developerConnection 'git@github.com:microcmpt/msa-rpc4j.git'
+                    }
+
+                    licenses {
+                        license {
+                            name 'The Apache Software License, Version 2.0'
+                            url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                            distribution 'repo'
+                        }
+                    }
+
+                    developers {
+                        developer {
+                            id 'xiapshen'
+                            name 'Shen Xia ping'
+                            email '1378127237@qq.com'
+                        }
+                    }
+                }
+            }
+        }
+    }
 
     task sourcesJar(type: Jar) {
         classifier = 'sources'
