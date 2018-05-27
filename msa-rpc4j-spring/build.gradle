@@ -1,11 +1,6 @@
 description = 'msa-rpc-spring'
 dependencies {
-    compile (group: 'com.github.microcmpt', name: 'msa-rpc-server', version:'1.0-SNAPSHOT') {
-        exclude(module: 'msa-api-recovery')
-    }
-    compile (group: 'com.github.microcmpt', name: 'msa-rpc-client', version:'1.0-SNAPSHOT') {
-        exclude(module: 'msa-api-recovery')
-    }
-    compile 'com.github.microcmpt:msa-api-regcovery:1.0.9-SNAPSHOT'
+    compile project(':msa-rpc-server')
+    compile project(':msa-rpc-client')
     testCompile group: 'junit', name: 'junit', version:'4.12'
 }
