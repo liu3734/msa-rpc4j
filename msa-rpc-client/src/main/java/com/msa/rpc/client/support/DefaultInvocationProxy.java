@@ -6,7 +6,7 @@ import com.msa.rpc.client.RpcClient;
 import com.msa.rpc.common.bean.RpcRequest;
 import com.msa.rpc.common.bean.RpcResponse;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.util.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
