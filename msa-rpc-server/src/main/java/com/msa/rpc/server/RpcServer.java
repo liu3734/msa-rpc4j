@@ -85,7 +85,15 @@ public class RpcServer implements ApplicationContextAware, InitializingBean {
      */
     @Override
     public void afterPropertiesSet() throws Exception {
-        Thread thread = new Thread(new RpcServerRunable(port, registry, handlerMap));
+        // 注册RPC服务地址
+        String serviceAddr = InetAddress.getLocalHost().getHostAddress() + ":" + port;
+        handlerMap.forEach((serviceName, instance) -> {
+            registry.registry(serviceName, serviceAddr);
+            log.debug(">>>>>>>>>>===registry service: {} ==> {}", serviceName, serviceAddr);
+        });
+
+        //异步启动netty
+        Thread thread = new Thread(new RpcServerRunable(port, handlerMap));
         thread.setDaemon(true);
         thread.start();
     }
@@ -98,10 +106,6 @@ public class RpcServer implements ApplicationContextAware, InitializingBean {
          * The Port.
          */
         private int port;
-        /**
-         * The Registry.
-         */
-        private ServiceRegistry registry;
 
         /**
          * The Handler map.
@@ -112,12 +116,10 @@ public class RpcServer implements ApplicationContextAware, InitializingBean {
          * Instantiates a new Rpc server runable.
          *
          * @param port       the port
-         * @param registry   the registry
          * @param handlerMap the handler map
          */
-        public RpcServerRunable(int port, ServiceRegistry registry, Map<String, Object> handlerMap) {
+        public RpcServerRunable(int port, Map<String, Object> handlerMap) {
             this.port = port;
-            this.registry = registry;
             this.handlerMap = handlerMap;
         }
 
@@ -130,7 +132,7 @@ public class RpcServer implements ApplicationContextAware, InitializingBean {
          * The general contract of the method <code>run</code> is that it may
          * take any action whatsoever.
          *
-         * @see Thread#run() Thread#run()Thread#run()Thread#run()Thread#run()
+         * @see Thread#run() Thread#run()Thread#run()Thread#run()Thread#run()Thread#run()
          */
         @Override
         public void run() {
@@ -154,12 +156,6 @@ public class RpcServer implements ApplicationContextAware, InitializingBean {
                 });
                 ChannelFuture future = bootstrap.bind(port).sync();
                 log.debug("server started, listening on {}", port);
-                // 注册RPC服务地址
-                String serviceAddr = InetAddress.getLocalHost().getHostAddress() + ":" + port;
-                handlerMap.forEach((serviceName, instance) -> {
-                    registry.registry(serviceName, serviceAddr);
-                    log.debug(">>>>>>>>>>===registry service: {} ==> {}", serviceName, serviceAddr);
-                });
                 // 释放资源
                 future.channel().closeFuture().sync();
             } catch (Exception e) {
