@@ -85,40 +85,90 @@ public class RpcServer implements ApplicationContextAware, InitializingBean {
      */
     @Override
     public void afterPropertiesSet() throws Exception {
-        EventLoopGroup group = new NioEventLoopGroup();
-        EventLoopGroup childGroup = new NioEventLoopGroup();
-        try {
-            ServerBootstrap bootstrap = new ServerBootstrap();
-            bootstrap.group(group, childGroup);
-            bootstrap.channel(NioServerSocketChannel.class);
-            bootstrap.childHandler(new ChannelInitializer<SocketChannel>() {
-                @Override
-                protected void initChannel(SocketChannel channel) throws Exception {
-                    ChannelPipeline pipeline = channel.pipeline();
-                    // 解码RPC请求
-                    pipeline.addLast(new RpcDecoder(RpcRequest.class));
-                    // 编码RPC响应
-                    pipeline.addLast(new RpcEncoder(RpcResponse.class));
-                    // 处理RPC请求
-                    pipeline.addLast(new RpcServerReqHandler(handlerMap));
-                }
-            });
-            ChannelFuture future = bootstrap.bind(port).sync();
-            log.debug("server started, listening on {}", port);
-            // 注册RPC服务地址
-            String serviceAddr = InetAddress.getLocalHost().getHostAddress() + ":" + port;
-            handlerMap.forEach((serviceName, instance) -> {
-                registry.registry(serviceName, serviceAddr);
-                log.debug(">>>>>>>>>>===registry service: {} ==> {}", serviceName, serviceAddr);
-            });
-            // 释放资源
-            future.channel().closeFuture().sync();
-        } catch (Exception e) {
-            log.error(">>>>>>>>>===server start exception", e);
-        } finally {
-            // 关闭RPC服务
-            childGroup.shutdownGracefully();
-            group.shutdownGracefully();
+        Thread thread = new Thread(new RpcServerRunable(port, registry, handlerMap));
+        thread.setDaemon(true);
+        thread.start();
+    }
+
+    /**
+     * The type Rpc server runable.
+     */
+    public static class RpcServerRunable implements Runnable {
+        /**
+         * The Port.
+         */
+        private int port;
+        /**
+         * The Registry.
+         */
+        private ServiceRegistry registry;
+
+        /**
+         * The Handler map.
+         */
+        private Map<String, Object> handlerMap;
+
+        /**
+         * Instantiates a new Rpc server runable.
+         *
+         * @param port       the port
+         * @param registry   the registry
+         * @param handlerMap the handler map
+         */
+        public RpcServerRunable(int port, ServiceRegistry registry, Map<String, Object> handlerMap) {
+            this.port = port;
+            this.registry = registry;
+            this.handlerMap = handlerMap;
+        }
+
+        /**
+         * When an object implementing interface <code>Runnable</code> is used
+         * to create a thread, starting the thread causes the object's
+         * <code>run</code> method to be called in that separately executing
+         * thread.
+         * <p>
+         * The general contract of the method <code>run</code> is that it may
+         * take any action whatsoever.
+         *
+         * @see Thread#run() Thread#run()Thread#run()Thread#run()Thread#run()
+         */
+        @Override
+        public void run() {
+            EventLoopGroup group = new NioEventLoopGroup();
+            EventLoopGroup childGroup = new NioEventLoopGroup();
+            try {
+                ServerBootstrap bootstrap = new ServerBootstrap();
+                bootstrap.group(group, childGroup);
+                bootstrap.channel(NioServerSocketChannel.class);
+                bootstrap.childHandler(new ChannelInitializer<SocketChannel>() {
+                    @Override
+                    protected void initChannel(SocketChannel channel) throws Exception {
+                        ChannelPipeline pipeline = channel.pipeline();
+                        // 解码RPC请求
+                        pipeline.addLast(new RpcDecoder(RpcRequest.class));
+                        // 编码RPC响应
+                        pipeline.addLast(new RpcEncoder(RpcResponse.class));
+                        // 处理RPC请求
+                        pipeline.addLast(new RpcServerReqHandler(handlerMap));
+                    }
+                });
+                ChannelFuture future = bootstrap.bind(port).sync();
+                log.debug("server started, listening on {}", port);
+                // 注册RPC服务地址
+                String serviceAddr = InetAddress.getLocalHost().getHostAddress() + ":" + port;
+                handlerMap.forEach((serviceName, instance) -> {
+                    registry.registry(serviceName, serviceAddr);
+                    log.debug(">>>>>>>>>>===registry service: {} ==> {}", serviceName, serviceAddr);
+                });
+                // 释放资源
+                future.channel().closeFuture().sync();
+            } catch (Exception e) {
+                log.error(">>>>>>>>>===server start exception", e);
+            } finally {
+                // 关闭RPC服务
+                childGroup.shutdownGracefully();
+                group.shutdownGracefully();
+            }
         }
     }
 }
