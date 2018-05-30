@@ -35,16 +35,16 @@ subprojects {
                 //为Pom文件做数字签名
                 beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
                 repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
-                    authentication(userName: System.getenv('ossrhUsername'), password: System.getenv('ossrhPassword'))
+                    authentication(userName: ossrhUsername, password: ossrhPassword)
                 }
                 snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
-                    authentication(userName: System.getenv('sonatypeUsername'), password: System.getenv('sonatypePassword'))
+                    authentication(userName: sonatypeUsername, password: sonatypePassword)
                 }
                 pom.project {
                     name project.name
                     packaging 'jar'
                     description 'Lightweight RPC communication framework based on netty and protostuff.'
-                    url 'https://github.com/microcmpt/msa-api-regcovery'
+                    url 'https://microcmpt.github.io'
 
                     scm {
                         url 'https://github.com/microcmpt/msa-rpc4j'
