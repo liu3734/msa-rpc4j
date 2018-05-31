@@ -97,6 +97,8 @@ public class RpcClient {
             log.error(">>>>>>>>===send request exception", e);
             return null;
         } finally {
+            //调用返回结果后，根据请求id移除应答结果，防止内存泄漏
+            responseMap.remove(request.getRequestId());
             group.shutdownGracefully();
         }
     }
